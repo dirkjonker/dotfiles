@@ -1,0 +1,24 @@
+# IntellIJ
+.idea/
+.idea*
+.DS_Store
+
+# visual studio
+*.suo
+*proj.user
+
+# vim swap files
+.*.swp
+
+
+*.log
+*.7z
+*.zip
+*.gz
+Thumbs.db
+.Trashes
+ehthumbs.db
+*.exe
+*.dll
+*.o
+*.so
