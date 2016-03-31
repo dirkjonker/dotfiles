@@ -51,7 +51,7 @@ set lazyredraw         " apparently improves speed when using macros
 
 set wildmenu           " easier browsing through files with vim
 
-set clipboard=unnamed  " always yank to windows clipboard
+" set clipboard=unnamed  " always yank to windows clipboard
 
 
 " Strip trailing whitespace on several filetypes
