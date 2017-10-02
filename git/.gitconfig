@@ -14,3 +14,8 @@
 
 [include]
     path = ~/.git_local
+[alias]
+	yolo = commit --amend --no-edit
+	sr = reset --soft HEAD^
+	co = checkout
+	pl = log --graph --decorate --oneline

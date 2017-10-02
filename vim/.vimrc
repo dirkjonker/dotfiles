@@ -12,7 +12,7 @@ colorscheme molokai
 set number             " show line numbers
 set ruler              " show cursor position on bottom row
 set cursorline         " highlight the line the cursor is on
-set textwidth=120      " max line width
+set textwidth=150      " max line width
 set colorcolumn=+1     " show where 120 lines end
 set showmatch          " show matching parentheses
 
@@ -51,7 +51,7 @@ set lazyredraw         " apparently improves speed when using macros
 
 set wildmenu           " easier browsing through files with vim
 
-" set clipboard=unnamed  " always yank to windows clipboard
+set clipboard=unnamed  " always yank to windows clipboard
 
 
 " Strip trailing whitespace on several filetypes
@@ -59,3 +59,6 @@ autocmd FileType py,python,sql,tpl,avsc,java autocmd BufWritePre * :%s/\s\+$//e
 
 au BufReadPost *.tpl set syntax=sql           " treat .tpl files as sql syntax
 au BufReadPost *.avsc set syntax=javascript   " treat avro schemas as json syntax
+
+cnoreabbrev W w
+cnoreabbrev Q q
