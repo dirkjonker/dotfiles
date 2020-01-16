@@ -1,12 +1,13 @@
 Installation
 ------------
 
-Clone this repository into your home folder as `dotfiles` and run the `bin/dot update` script.
+Clone this repository into your home folder as `dotfiles` and run the `link.sh` script.
 
 ```bash
 git clone https://github.com/dirkjonker/dotfiles.git ~/.dotfiles
-~/.dotfiles/bin/dot update --verbose
+~/.dotfiles/link.sh
 ```
 
-Based on dotfiler:
-https://github.com/svetlyak40wt/dotfiler
+### How does it work?
+
+It symlinks the directories in this repository to `XDG_CONFIG_HOME` (usually `${HOME}/.config`).
