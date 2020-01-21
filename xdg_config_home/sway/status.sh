@@ -1,4 +1,5 @@
-wifi=$(iw dev wlp61s0 link | rg -o 'SSID: \w+' | cut -d' ' -f2)
+wifi_status=$(cat /sys/class/net/wlp61s0/link_mode)
+wifi_ssid=$(iw dev wlp61s0 link | rg -o 'SSID: \w+' | cut -d' ' -f2)
 wifi_signal=$(iwconfig wlp61s0 | rg -o '\d+/\d+')
 wifi_signal=$(awk "BEGIN { print int(100 * $wifi_signal) }")
 
@@ -17,4 +18,12 @@ else
     battery="${batpct}%"
 fi
 
-echo "W ${wifi} ${wifi_signal}% | B ${battery} | $(date +'%Y-%m-%d %H:%M' ) "
+if [[ ${wifi_status} -eq 1 ]]; then
+    wifi="${wifi_ssid} ${wifi_signal}%"
+else
+    wifi="¬"
+fi
+
+volume=$(python3 ${HOME}/.config/sway/volume.py)
+
+echo "V ${volume} • W ${wifi} • B ${battery} • $(date +'%Y-%m-%d %H:%M' ) "

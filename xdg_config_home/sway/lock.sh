@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wallpapers="${HOME}/Pictures/wallpapers"
+wallpapers="${HOME}/Pictures/wallpapers/shipping"
 
 image=$(ls ${wallpapers} | shuf | head -n1)
 

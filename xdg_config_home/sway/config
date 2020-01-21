@@ -53,10 +53,10 @@ bindswitch --locked lid:off output eDP-1 enable
 # Example configuration:
 #
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
-         timeout 600 'swaymsg "output * dpms off"' \
+         timeout 120 '~/.config/sway/lock.sh' \
+         timeout 240 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 000000'
+         before-sleep '~/.config/sway/lock.sh'
 
 bindsym $mod+p exec ~/.config/sway/lock.sh
 
@@ -242,8 +242,14 @@ bindsym $mod+r mode "resize"
 # Media keys
 #
 
-    bindsym XF86MonBrightnessUp exec light -T 1.2
-    bindsym XF86MonBrightnessDown exec light -T 0.5
+    # brightness, max is 1515 so 15 steps of 101
+    bindsym XF86MonBrightnessUp exec light -r -A 101
+    bindsym XF86MonBrightnessDown exec light -r -U 101
+
+    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 
 #
 # Status Bar:
