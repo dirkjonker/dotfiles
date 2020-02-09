@@ -11,4 +11,5 @@ then
     swaymsg output eDP-1 disable
 else
     echo 'lid is open'
+    swaymsg output eDP-1 enable
 fi
