@@ -29,7 +29,7 @@ output eDP-1 {
 
 # dell external monitor
 output DP-1 {
-    resolution 3840x2160
+    resolution 2560x1440
     position 0 0
     #scale 2
 }
@@ -43,15 +43,16 @@ bindswitch --locked lid:on output eDP-1 disable
 bindswitch --locked lid:off output eDP-1 enable
 
 ### Idle configuration
-#
+set $lock '~/.config/sway/lock.sh'
 exec swayidle -w \
-         timeout 300 '~/.config/sway/lock.sh' \
-         timeout 900 'swaymsg "output * dpms off"' \
-              resume 'swaymsg "output * dpms on"' \
-         before-sleep '~/.config/sway/lock.sh' \
-         lock '~/.config/sway/lock.sh'
+        timeout 300 $lock \
+        timeout 600 'swaymsg "output * dpms off"' \
+            resume 'swaymsg "output * dpms on"' \
+        before-sleep $lock \
+        lock $lock
 
-bindsym $mod+p exec ~/.config/sway/lock.sh
+# Locking the screen
+bindsym Ctrl+$mod+l exec ~/.config/sway/lock.sh
 
 # show notifications
 exec mako
@@ -224,7 +225,7 @@ bindsym $mod+r mode "resize"
     bindsym XF86MonBrightnessDown exec light -r -U 101
 
     bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-    bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
     bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
     bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 
@@ -249,5 +250,10 @@ bar {
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
+
+# app specific
+# Always start calculator in floating mode
+for_window [app_id="gnome-calculator"] floating enable
+for_window [app_id="org.gnome.Nautilus"] floating enable
 
 include /etc/sway/config.d/*
