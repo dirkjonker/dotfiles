@@ -2,7 +2,7 @@
 Description=Mailcatcher
 
 [Service]
-ExecStart=/home/dirk/.rbenv/versions/2.6.3/bin/mailcatcher --foreground --smtp-port 1025 --http-port 1080
+ExecStart=/home/dirk/.rbenv/versions/2.6.6/bin/mailcatcher --foreground --smtp-port 1025 --http-port 1080
 CPUQuota=20%
 MemoryMax=100M
 

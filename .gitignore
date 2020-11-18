@@ -1,2 +1,3 @@
 .created-links
 *.pyc
+xdg_config_home/**/sqlproxy.service

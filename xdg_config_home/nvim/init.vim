@@ -2,18 +2,32 @@
 " Plugins using vim-plug "
 "#########################
 
-let g:ale_completion_enabled = 1
-
 " fuzzy finder - use fd to respect .gitignore
-let $FZF_DEFAULT_COMMAND = 'fd --type f'
+let $FZF_DEFAULT_COMMAND = 'fdfind --type f'
 
 call plug#begin()
+
+" QuickRun!
+Plug 'thinca/vim-quickrun'
+
+" let g:ale_completion_enabled = 1
+
+" linter
+Plug 'dense-analysis/ale'
+
+" language server client
+Plug 'autozimu/LanguageClient-neovim', {
+     \ 'branch': 'next',
+     \ 'do': 'bash install.sh',
+     \ }
 
 " auto closes parens
 Plug 'cohama/lexima.vim'
 
+" support for .editorconfig files
 Plug 'editorconfig/editorconfig-vim'
-Plug 'scrooloose/nerdtree'
+
+" Plug 'scrooloose/nerdtree'
 
 " awesome paren/quote/etc handling
 Plug 'tpope/vim-surround'
@@ -22,33 +36,28 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 
 " lisp
-Plug 'bhurlow/vim-parinfer'
+" Plug 'bhurlow/vim-parinfer'
+
+" F# Ionide
+" Plug 'ionide/Ionide-vim', {
+"       \ 'do':  'make fsautocomplete',
+"       \}
+"
+" " OCAML
+" Plug 'ocaml/vim-ocaml'
 
 " fuzzy finder
-Plug '/usr/bin/fzf'
+" Plug '/usr/bin/fzf'
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-
-" linter handler
-Plug 'dense-analysis/ale'
-
-" " language server
-" Plug 'autozimu/LanguageClient-neovim', {
-"     \ 'branch': 'next',
-"     \ 'do': 'bash install.sh',
-"     \ }
-" " autocompletion
-" Plug 'ncm2/ncm2'
-" Plug 'roxma/nvim-yarp'
-" Plug 'ncm2/ncm2-bufword'
-" Plug 'ncm2/ncm2-path'
-" " rust completion
-" " Plug 'ncm2/ncm2-racer'
 
 " language specific
 Plug 'rust-lang/rust.vim'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'leafgarland/typescript-vim'
 " Plug 'hashivim/vim-terraform'
+Plug 'jvirtanen/vim-hcl'
+Plug 'ziglang/zig.vim'
 
 " nginx config
 " Plug 'chr4/nginx.vim'
@@ -72,17 +81,17 @@ Plug 'othree/yajs.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 
 " themes
-Plug 'Jimeno0/vim-chito'
-Plug 'ajmwagar/vim-deus'
-Plug 'icymind/NeoSolarized'
-Plug 'kaicataldo/material.vim'
-Plug 'nightsense/snow'
-Plug 'nightsense/stellarized'
-Plug 'phanviet/vim-monokai-pro'
-Plug 'skreek/skeletor.vim'
 Plug 'lifepillar/vim-solarized8'
-Plug 'tyrannicaltoucan/vim-quantum'
-Plug 'morhetz/gruvbox'
+" Plug 'Jimeno0/vim-chito'
+" Plug 'ajmwagar/vim-deus'
+" Plug 'icymind/NeoSolarized'
+" Plug 'kaicataldo/material.vim'
+" Plug 'nightsense/snow'
+" Plug 'nightsense/stellarized'
+" Plug 'phanviet/vim-monokai-pro'
+" Plug 'skreek/skeletor.vim'
+" Plug 'tyrannicaltoucan/vim-quantum'
+" Plug 'morhetz/gruvbox'
 
 " airline
 Plug 'vim-airline/vim-airline'
@@ -102,9 +111,8 @@ set autoread
 " proper terminal color support
 set termguicolors
 
-set background=dark
-colorscheme chito
-let g:airline_theme='snow_dark'
+set background=light
+colorscheme solarized8
 
 " use uppercase write/quit
 cnoreabbrev W w
@@ -117,13 +125,14 @@ cnoreabbrev Wq wq
 set ignorecase
 set smartcase
 
+let maplocalleader="\<space>"
+
 nnoremap <leader><space> :noh<CR>
-nnoremap <leader>t :tabnew<space>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>m :set nowrap<CR>
 nnoremap <leader>n :set wrap<CR>
-nnoremap <leader>f :FZF<CR>
-nnoremap <leader>g :Rg<CR>
+nnoremap <C-P> :FZF<CR>
+nnoremap <C-K> :Rg<CR>
 
 " tab navigation with Alt + h and Alt + l
 nnoremap <A-h> :tabprevious<CR>
@@ -133,67 +142,59 @@ nnoremap <A-Right> :tabm +1<CR>
 nnoremap <A-S-h> :tabm -1<CR>
 nnoremap <A-S-l> :tabm +1<CR>
 
-" file types
-augroup filetypedetect
-    au BufRead,BufNewFile *.jbuilder set filetype=ruby
-augroup END
-
 " do not complete def/end if/end etc. in ruby etc.
 let g:lexima_enable_endwise_rules = 0
 
-" rust folding
-let g:rust_fold = 1
-
 " strip whitespace on save
 let g:ale_fixers = {
-    \  'css': ['prettier'],
-    \  'groovy': ['remove_trailing_lines', 'trim_whitespace'],
-    \  'javascript': ['prettier'],
-    \  'json': ['jq'],
-    \  'markdown': ['remove_trailing_lines', 'trim_whitespace'],
-    \  'ruby': ['rubocop'],
-    \  'rust': ['rustfmt'],
-    \  'scss': ['remove_trailing_lines', 'trim_whitespace'],
-    \  'slim': ['remove_trailing_lines', 'trim_whitespace'],
-    \  'terraform': ['terraform', 'trim_whitespace', 'remove_trailing_lines'],
-    \  'tf': ['terraform'],
-    \  'typescript': ['prettier'],
-    \  'yaml': ['remove_trailing_lines', 'trim_whitespace'],
-    \}
-    "\  'python': ['black'],
-    "\  'yaml': ['prettier'],
+     \  'css': ['prettier'],
+     \  'groovy': ['remove_trailing_lines', 'trim_whitespace'],
+     \  'javascript': ['prettier'],
+     \  'json': ['jq'],
+     \  'markdown': ['remove_trailing_lines', 'trim_whitespace'],
+     \  'ocaml': ['remove_trailing_lines', 'trim_whitespace', 'ocp-indent'],
+     \  'ruby': ['rubocop'],
+     \  'rust': ['rustfmt'],
+     \  'sass': ['remove_trailing_lines', 'trim_whitespace'],
+     \  'scss': ['prettier'],
+     \  'slim': ['remove_trailing_lines', 'trim_whitespace'],
+     \  'hcl': ['terraform', 'trim_whitespace', 'remove_trailing_lines'],
+     \  'typescript': ['prettier'],
+     \  'yaml': ['remove_trailing_lines', 'trim_whitespace'],
+     \}
+"     "\  'yaml': ['prettier'],
+"     "\  'python': ['black'],
 let g:ale_javascript_prettier_executable = 'prettier'
-let g:ale_rust_rls_toolchain = 'stable'
-let g:ale_linters = {
-    \ 'html': [],
-    \ 'python': ['flake8'],
-    \ 'rust': ['rls'],
-    \}
-
+" let g:ale_rust_rls_toolchain = 'stable'
+" let g:ale_linters = {
+"     \ 'html': [],
+"     \ 'python': ['flake8'],
+"     \ 'rust': ['rls'],
+"     \}
+"
 let g:ale_fix_on_save = 1
-" let g:ale_set_balloons = 1
-" let g:ale_hover_to_preview = 1
+" " let g:ale_set_balloons = 1
+" " let g:ale_hover_to_preview = 1
 
-nnoremap <silent> K :ALEHover<CR>
-nnoremap <silent> gD :ALEGoToDefinition<CR>
-nnoremap <silent> gd :ALEGoToDefinitionInTab<CR>
+" nnoremap <silent> K :ALEHover<CR>
+" nnoremap <silent> gD :ALEGoToDefinition<CR>
+" nnoremap <silent> gd :ALEGoToDefinition -tab<CR>
 
-" " Language server
-" set hidden
-"
-" " enable autocomplete for all buffers
-" autocmd BufEnter * call ncm2#enable_for_buffer()
 " set completeopt=noinsert,menuone,noselect
-"
-" let g:LanguageClient_serverCommands = {
-"     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-"     \ }
-"
-" nnoremap <silent> gC :call LanguageClient_contextMenu()<CR>
-" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <buffer> <silent> gd <C-w>v:call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent> gD :call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-" mouse on iTerm
+let g:merlin_python_version = 3
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ }
+" do not use annoying hovering windows
+let g:LanguageClient_useFloatingHover = 0
+nnoremap <silent> gC :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <buffer> <silent> gd <C-w>v:call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> gD :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+
+" mouse
 set mouse=a
