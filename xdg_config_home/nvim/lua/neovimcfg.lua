@@ -171,7 +171,16 @@ vim.g.markdown_fenced_languages = {
 
 -- treesitter config
 require "nvim-treesitter.configs".setup {
-  ensure_installed = { "ruby", "rust", "javascript", "html", "svelte", "css" },
+  ensure_installed = {
+    "css",
+    "html",
+    "javascript",
+    "lua",
+    "ruby",
+    "rust",
+    "svelte",
+    "typescript",
+  },
   highlight = {
     enable = true
   },
@@ -343,6 +352,10 @@ lsp.svelte.setup {
 }
 
 lsp.tsserver.setup {
+}
+
+require("typespec")
+lsp.typespec.setup {
 }
 
 require("sg").setup {
