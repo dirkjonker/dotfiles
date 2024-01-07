@@ -6,7 +6,7 @@ vim.opt.number = true
 vim.opt.relativenumber = false
 
 -- let's try this
-vim.opt.smartindent = true
+vim.opt.smartindent = false
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
