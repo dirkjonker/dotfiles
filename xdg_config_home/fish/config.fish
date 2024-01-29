@@ -1,10 +1,10 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    if [ -f /opt/homebrew/bin/brew ];
+    if test -f /opt/homebrew/bin/brew
         eval (/opt/homebrew/bin/brew shellenv)
     end
 
-    if [ -f ~/.rbenv/bin/rbenv ];
+    if test -f ~/.rbenv/bin/rbenv
         ~/.rbenv/bin/rbenv init - fish | source
     end
 
