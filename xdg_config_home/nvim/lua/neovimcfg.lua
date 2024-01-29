@@ -331,7 +331,10 @@ lsp.ruby_ls.setup {
 
 lsp.rust_analyzer.setup {
   settings = {
-    ['rust-analyzer'] = {
+    ["rust-analyzer"] = {
+      check = {
+        command = "clippy",
+      },
       diagnostics = {
         enable = true
       },
@@ -359,4 +362,24 @@ lsp.typespec.setup {
 }
 
 require("sg").setup {
+}
+
+local dap = require("dap")
+dap.adapters.codelldb = {
+  type = 'server',
+  port = "${port}",
+  executable = {
+    -- CHANGE THIS to your path!
+    command = '/Users/dirk/local/bin/codelldb/adapter/codelldb',
+    args = {"--port", "${port}"},
+
+    -- On windows you may have to uncomment this:
+    -- detached = false,
+  }
+}
+
+dap.configurations.rust = {
+  {
+
+  }
 }

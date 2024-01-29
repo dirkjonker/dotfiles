@@ -25,6 +25,7 @@ return require('packer').startup(function(use)
   -- use "AndrewRadev/splitjoin.vim"
 
   use "simrat39/rust-tools.nvim"
+  use "mfussenegger/nvim-dap"
 
   use 'dense-analysis/ale'
   use {
