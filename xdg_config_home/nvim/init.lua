@@ -5,7 +5,6 @@ vim.g.mapleader = " "
 vim.opt.cursorline = true
 -- show line numbers
 vim.opt.number = true
-vim.opt.relativenumber = true
 
 -- let's try this - nope don't like it
 vim.opt.smartindent = false
@@ -77,6 +76,7 @@ vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 
 vim.keymap.set("", "<C-p>", "<cmd>Files<cr>")
+vim.keymap.set("n", ";", "<cmd>Buffers<cr>")
 
 vim.keymap.set("n", "H", "<cmd>tabprev<cr>")
 vim.keymap.set("n", "L", "<cmd>tabnext<cr>")
@@ -130,7 +130,7 @@ require("lazy").setup({
     config = function()
       require("lualine").setup {
         options = {
-          -- theme = "gruvbox",
+          theme = "tokyonight",
           component_separators = '',
           section_separators = '',
         },
@@ -163,6 +163,7 @@ require("lazy").setup({
       update_interval = 10000,
     },
   },
+  { "cohama/lexima.vim" },
   { "machakann/vim-sandwich" },
   { "tpope/vim-commentary" },
   { "tpope/vim-fugitive" },
@@ -221,6 +222,8 @@ require("lazy").setup({
         }
       }
 
+      lsp.ruby_ls.setup {}
+
       lsp.svelte.setup {
         root_dir = lsp.util.root_pattern("svelte.config.js"),
         filetypes = { "svelte" }
@@ -265,15 +268,14 @@ require("lazy").setup({
           end, opts)
 
           -- local client = vim.lsp.get_client_by_id(ev.data.client_id)
+          -- -- Disabling semantics tokens will stop syntax highlighting from changing randomly.
+          -- client.server_capabilities.semanticTokensProvider = nil
 
           -- When https://neovim.io/doc/user/lsp.html#lsp-inlay_hint stabilizes
           -- *and* there's some way to make it only apply to the current line.
           -- if client.server_capabilities.inlayHintProvider then
           --     vim.lsp.inlay_hint(ev.buf, true)
           -- end
-
-          -- Disabling semantics tokens will stop syntax highlighting from changing randomly.
-          -- client.server_capabilities.semanticTokensProvider = nil
         end,
       })
     end
@@ -328,6 +330,26 @@ require("lazy").setup({
         })
       })
     end
+  },
+  -- tree-sitter for typescript syntax highlighting
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      local configs = require("nvim-treesitter.configs")
+
+      configs.setup({
+        ensure_installed = {
+          "rust",
+          "svelte",
+          "typescript",
+        },
+        sync_install = false,
+        highlight = { enable = true },
+        indent = { enable = true },
+      })
+    end,
+    ft = { "typescript" },
   },
   -- svelte
   {
