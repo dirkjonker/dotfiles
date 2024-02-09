@@ -7,3 +7,4 @@ xdg_config_home/kitty/local.conf
 xdg_config_home/kitty/kitty.conf.bak
 xdg_config_home/kitty/current-theme.conf
 xdg_config_home/fish/fish_variables
+xdg_config_home/fish/functions/fzf_key_bindings.fish
